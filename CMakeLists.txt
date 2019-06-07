@@ -18,4 +18,4 @@ set(CURVESRC ${CMAKE_SOURCE_DIR}/vendor/curve25519/source/curve25519_dh.c ${CMAK
 set(ALACSRC ${CMAKE_SOURCE_DIR}/vendor/alac/codec/ag_dec.c ${CMAKE_SOURCE_DIR}/vendor/alac/codec/ag_enc.c ${CMAKE_SOURCE_DIR}/vendor/alac/codec/ALACBitUtilities.c ${CMAKE_SOURCE_DIR}/vendor/alac/codec/ALACDecoder.cpp ${CMAKE_SOURCE_DIR}/vendor/alac/codec/ALACEncoder.cpp ${CMAKE_SOURCE_DIR}/vendor/alac/codec/dp_dec.c ${CMAKE_SOURCE_DIR}/vendor/alac/codec/dp_enc.c ${CMAKE_SOURCE_DIR}/vendor/alac/codec/EndianPortable.c ${CMAKE_SOURCE_DIR}/vendor/alac/codec/matrix_dec.c ${CMAKE_SOURCE_DIR}/vendor/alac/codec/matrix_enc.c)
 
 add_executable(${PROJECT_NAME} ${PROGSRC} ${CURVESRC} ${ALACSRC} src/raop_play.c)
-target_link_libraries(${PROJECT_NAME} OpenSSL::Crypto)
+target_link_libraries(${PROJECT_NAME} OpenSSL::Crypto pthread)
