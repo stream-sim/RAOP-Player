@@ -362,7 +362,6 @@ int main(int argc, char *argv[]) {
 
 	if (!raopcl_connect(raopcl, player.addr, port, true)) {
 		raopcl_destroy(raopcl);
-		free(raopcl);
 		LOG_ERROR("Cannot connect to AirPlay device %s, check firewall",
 				   inet_ntoa(player.addr));
 		close_platform(interactive);
