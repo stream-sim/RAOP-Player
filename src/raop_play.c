@@ -230,6 +230,7 @@ int main(int argc, char *argv[]) {
 	struct raopcl_s *raopcl;
 	char *fname = NULL;
 	int port = 5000;
+	bool set_volume = false;
 	int volume = 50, wait = 0, latency = MS2TS(1000, 44100);
 	struct {
 		struct hostent *hostent;
@@ -262,6 +263,7 @@ int main(int argc, char *argv[]) {
 		}
 		if(!strcmp(argv[i],"-v")){
 			volume=atoi(argv[++i]);
+			set_volume = true;
 			continue;
 		}
 		if(!strcmp(argv[i],"-w")){
@@ -360,7 +362,9 @@ int main(int argc, char *argv[]) {
 	player.hostent = gethostbyname(player.name);
 	memcpy(&player.addr.s_addr, player.hostent->h_addr_list[0], player.hostent->h_length);
 
-	if (!raopcl_connect(raopcl, player.addr, port, true)) {
+restart:
+
+	if (!raopcl_connect(raopcl, player.addr, port, set_volume)) {
 		raopcl_destroy(raopcl);
 		LOG_ERROR("Cannot connect to AirPlay device %s, check firewall",
 				   inet_ntoa(player.addr));
@@ -368,6 +372,7 @@ int main(int argc, char *argv[]) {
 		exit(1);
 	}
 
+	set_volume = false;
 	latency = raopcl_latency(raopcl);
 
 	LOG_INFO("connected to %s on port %d, player latency is %d ms", inet_ntoa(player.addr),
@@ -440,6 +445,13 @@ int main(int argc, char *argv[]) {
 				LOG_INFO("Re-started at : %u.%u", SECNTP(start_at));
 				}
 				break;
+			case 'd':
+				LOG_INFO("Disconnected at : %u.%u", SECNTP(get_ntp(NULL)));
+				raopcl_disconnect(raopcl);
+				LOG_INFO("Press any key to reconnect ('q' to quit)...");
+				c = _getch();
+				if (c != 'q')
+					goto restart;
 			case 'q':
 				raopcl_disconnect(raopcl);
 				raopcl_destroy(raopcl);
