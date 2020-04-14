@@ -761,6 +761,52 @@ static void _raopcl_terminate_rtp(struct raopcl_s *p)
 
 
 /*----------------------------------------------------------------------------*/
+bool raopcl_volume_up(struct raopcl_s *p)
+{
+	char a[128];
+	float vol = p->volume + 0.1;
+
+	if (!p) return false;
+
+	if (vol < VOLUME_MIN) vol = -144.0;
+	else if (vol > VOLUME_MAX) vol = VOLUME_MAX;
+
+	if (p->volume == vol) return false;
+
+	p->volume = vol;
+
+	if (!p->rtspcl || p->state < RAOP_FLUSHED) return true;
+
+	sprintf(a, "volume: %f\r\n", vol);
+
+	return rtspcl_set_parameter(p->rtspcl, a);
+}
+
+
+/*----------------------------------------------------------------------------*/
+bool raopcl_volume_down(struct raopcl_s *p)
+{
+	char a[128];
+	float vol = p->volume - 0.1;
+
+	if (!p) return false;
+
+	if (vol < VOLUME_MIN) vol = -144.0;
+	else if (vol > VOLUME_MAX) vol = VOLUME_MAX;
+
+	if (p->volume == vol) return false;
+
+	p->volume = vol;
+
+	if (!p->rtspcl || p->state < RAOP_FLUSHED) return true;
+
+	sprintf(a, "volume: %f\r\n", vol);
+
+	return rtspcl_set_parameter(p->rtspcl, a);
+}
+
+
+/*----------------------------------------------------------------------------*/
 bool raopcl_set_volume(struct raopcl_s *p, float vol)
 {
 	char a[128];

@@ -153,6 +153,8 @@ bool 	raopcl_keepalive(struct raopcl_s *p);
 
 bool 	raopcl_set_progress(struct raopcl_s *p, u64_t elapsed, u64_t end);
 bool 	raopcl_set_progress_ms(struct raopcl_s *p, u32_t elapsed, u32_t duration);
+bool 	raopcl_volume_up(struct raopcl_s *p);
+bool 	raopcl_volume_down(struct raopcl_s *p);
 bool 	raopcl_set_volume(struct raopcl_s *p, float vol);
 float 	raopcl_float_volume(int vol);
 bool 	raopcl_set_daap(struct raopcl_s *p, int count, ...);

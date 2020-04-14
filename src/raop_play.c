@@ -350,6 +350,7 @@ int main(int argc, char *argv[]) {
 
 	init_platform(interactive);
 
+
 	if ((raopcl = raopcl_create(host, NULL, NULL, alac ? RAOP_ALAC : RAOP_PCM, MAX_SAMPLES_PER_CHUNK,
 								latency, crypto, false, secret, et, md,
 								44100, 16, 2,
@@ -452,6 +453,15 @@ restart:
 				c = _getch();
 				if (c != 'q')
 					goto restart;
+			case '+':
+				raopcl_volume_up(raopcl);
+				break;
+			case '-':
+				raopcl_volume_down(raopcl);
+				break;
+			case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
+				raopcl_set_volume(raopcl, raopcl_float_volume(10*(c-'0')));
+				break;
 			case 'q':
 				raopcl_disconnect(raopcl);
 				raopcl_destroy(raopcl);
