@@ -81,13 +81,22 @@ static int print_usage(char *argv[])
 			   "\t[-n <start>] (start at NTP <start> + <wait>)\n"
 			   "\t[-nf <start>] (start at NTP in <file> + <wait>)\n"
 			   "\t[-e] (encrypt)\n"
-   			   "\t[-a] send ALAC compressed audio\n"
+			   "\t[-a] send ALAC compressed audio\n"
 			   "\t[-s <secret>] (valid secret for AppleTV)\n"
 			   "\t[-t <et>] (et field in mDNS - used to detect MFi)\n"
 			   "\t[-m <[0][,1][,2]>] (md in mDNS: metadata capabilties 0=text, 1=artwork, 2=progress)\n"
 			   "\t[-d <debug level>] (0 = silent)\n"
-			   "\t[-i] (interactive commands: 'p'=pause, 'r'=(re)start, 's'=stop, 'q'=exit, ' '=block)\n",
-			   name);
+			   "\t[-i] interactive commands:\n"
+			   "\t     'p' = pause\n"
+			   "\t     'r' = (re)start\n"
+			   "\t     's' = stop\n"
+			   "\t     '+' = volume up\n"
+			   "\t     '-' = volume down\n"
+			   "\t     '0-9' = volume 0-90%%\n"
+			   "\t     'd' = disconnect\n"
+			   "\t     'q' = exit\n"
+			   "\t     ' ' = block\n"
+			   , name);
 	return -1;
 }
 
