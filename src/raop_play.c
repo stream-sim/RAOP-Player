@@ -484,6 +484,9 @@ restart:
 			}
 		}
 
+		// add some sleep to avoid CPU hogging
+		usleep(100);
+
 	} while (n || raopcl_is_playing(raopcl));
 
 	raopcl_disconnect(raopcl);
